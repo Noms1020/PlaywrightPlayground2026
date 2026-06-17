@@ -42,7 +42,7 @@ export class InvoicePage extends BasePage {
             //await this.page.getByRole('combobox').locator(`option[value="${invoiceData.selectedCourses[index]}"]`).waitFor({ timeout: 5000 });
         }
 
-        
+         await this. page.locator('input[type="date"]').fill(invoiceData.DueDate);
         await this.page.locator('select').filter({ has: this.page.locator('option[value="paid"], option[value="pending"]') }).nth(1).selectOption(invoiceData.paymentStatus);
         await this.page.getByRole('textbox', { name: 'Additional notes...' }).click();
         await this.page.getByRole('textbox', { name: 'Additional notes...' }).fill(invoiceData.additionalNotes);
