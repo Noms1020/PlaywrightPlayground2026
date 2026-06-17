@@ -19,6 +19,7 @@ export type NewInvoiceInput = {
     clientAddress: string;
     coursesToAdd: number;
     selectedCourses: string[];
+    DueDate: string;
     paymentStatus: string;
     additionalNotes: string;
 };
@@ -35,6 +36,7 @@ export const InvoiceData = {
             '31b1143b-aa19-4c20-bdf6-6700484b0dcb',
             //'31b1143b-aa19-4c20-bdf6-6700484b0dcb'
         ],
+        DueDate:'2026/06/30',
         paymentStatus: 'paid',
         additionalNotes: 'Testing invoice creation'
     } as NewInvoiceInput
