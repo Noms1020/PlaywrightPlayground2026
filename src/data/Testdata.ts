@@ -28,13 +28,13 @@ export const InvoiceData = {
     newInvoice: {
         clientNameOrEmail: 'Ndosi Test Automation',
         clientAddress: '24 koedoe street, ext2 Lenasia',
-        coursesToAdd: 4,
+        coursesToAdd: 5,
         selectedCourses: [
             '31b1143b-aa19-4c20-bdf6-6700484b0dcb',
             '31b1143b-aa19-4c20-bdf6-6700484b0dcb',
             '31b1143b-aa19-4c20-bdf6-6700484b0dcb',
             '31b1143b-aa19-4c20-bdf6-6700484b0dcb',
-            //'31b1143b-aa19-4c20-bdf6-6700484b0dcb'
+            '31b1143b-aa19-4c20-bdf6-6700484b0dcb'
         ],
         DueDate:'2026/06/30',
         paymentStatus: 'paid',

@@ -1,4 +1,4 @@
-import { Locator} from '@playwright/test';
+import { Locator, expect } from '@playwright/test';
 import { BasePage } from './BasePage';
 import { NewInvoiceInput } from '../data/Testdata';
 
@@ -7,9 +7,9 @@ export class InvoicePage extends BasePage {
         return this.page.getByRole('heading', { name: /Admin\s*Dashboard/i }); //regex  for case insensitive match and to ignore any whitespace between "Admin" and "Dashboard"
     }
 
-   async verifyAdminDashboardIsDisplayed() {
-      await this.basePageVerifyElementIsVisible(this.verifyAdminDashboardHeading);    
-   }
+    async verifyAdminDashboardIsDisplayed() {
+        await this.basePageVerifyElementIsVisible(this.verifyAdminDashboardHeading);
+    }
 
     async navigateToInvoicePage() {
 
@@ -30,28 +30,54 @@ export class InvoicePage extends BasePage {
         await this.page.getByRole('textbox', { name: 'Enter client address...' }).fill(invoiceData.clientAddress);
 
         const requiredCourseRows = invoiceData.selectedCourses.length;
-        const coursesToAdd = Math.max(invoiceData.coursesToAdd, requiredCourseRows -1);
+        const coursesToAdd = Math.max(invoiceData.coursesToAdd, requiredCourseRows - 1);
 
-        for (let index = 0; index < coursesToAdd; index++) {
+        for (let index = 0; index < requiredCourseRows; index++) {
             await this.page.getByRole('button', { name: '➕ Add Course' }).click({ force: true });
         }
 
-        for (let index = 0; index <invoiceData.selectedCourses.length; index++) {
-           
-            await this.page.getByRole('combobox').nth(index).selectOption(invoiceData.selectedCourses[index]);
-            //await this.page.getByRole('combobox').locator(`option[value="${invoiceData.selectedCourses[index]}"]`).waitFor({ timeout: 5000 });
+        // for (let index = 0; index <invoiceData.selectedCourses.length; index++) {
+
+        //     //await this.page.getByRole('combobox').nth(index).selectOption(invoiceData.selectedCourses[index]);
+        //     //await this.page.getByRole('combobox').locator(`option[value="${invoiceData.selectedCourses[index]}"]`).waitFor({ timeout: 5000 });
+        //     await this. page.locator('select').selectOption({value: invoiceData.selectedCourses[index]});
+        // }
+
+                for (let index=0; index<invoiceData.selectedCourses.length; index++) {
+
+                const row=this.page.locator('table.invoice-items-table tbody tr').nth(index);
+
+                await row.locator('select').selectOption({
+
+                 value: invoiceData.selectedCourses[index]
+
+          });
+
         }
 
-         await this. page.locator('input[type="date"]').fill(invoiceData.DueDate);
+        // for (let index = 0; index < invoiceData.selectedCourses.length; index++) {
+        //   const row = this.page.locator("tbody tr").nth(index);
+
+        //   await row.locator("select").selectOption({
+        //     value: invoiceData.selectedCourses[index]
+        //   });
+        // }
+
+        
+
+
+
+        await this.page.locator('input[type="date"]').fill(invoiceData.DueDate);
         await this.page.locator('select').filter({ has: this.page.locator('option[value="paid"], option[value="pending"]') }).nth(1).selectOption(invoiceData.paymentStatus);
         await this.page.getByRole('textbox', { name: 'Additional notes...' }).click();
         await this.page.getByRole('textbox', { name: 'Additional notes...' }).fill(invoiceData.additionalNotes);
-        this. page.once('dialog', dialog => {
-    console.log(`Dialog message: ${dialog.message()}`);
-    dialog.dismiss().catch(() => {});
-  });
-  await this.page.getByRole('button', { name: '✅ Create Invoice' }).click();
-};
+        this.page.once('dialog', dialog => {
+            console.log(`Dialog message: ${dialog.message()}`);
+            dialog.dismiss().catch(() => { });
+        });
+        await this.page.getByRole('button', { name: '✅ Create Invoice' }).click();
+
+    };
 
 
 
