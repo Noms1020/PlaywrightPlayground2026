@@ -5,9 +5,9 @@ import { NewInvoiceInput } from '../data/Testdata';
 export class InvoicePage extends BasePage {
     private normalizeDateForHtmlInput(dateValue: string): string {
         const normalizedValue = dateValue.trim().replace(/[/.]/g, '-');
-        const isoDatePattern = /^\d{4}-\d{2}-\d{2}$/;
+        const htmlDatePattern = /^\d{4}-\d{2}-\d{2}$/;
 
-        if (!isoDatePattern.test(normalizedValue)) {
+        if (!htmlDatePattern.test(normalizedValue)) {
             throw new Error(`Invalid date format: "${dateValue}". Use YYYY-MM-DD.`);
         }
 
